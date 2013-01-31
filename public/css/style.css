@@ -1,0 +1,17 @@
+body {
+  padding: 10px 30px;
+}
+a {
+  color: #00B7FF;
+}
+.drop {
+  font-weight: bold;
+  padding: 30px;
+  text-align: center;
+  border: 1px solid red;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+.drop img {
+  max-width: 160px;
+}

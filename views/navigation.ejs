@@ -1,0 +1,16 @@
+<ul class="nav nav-list">
+    <img src="http://i.imgur.com/Asf2J.jpg" style=" width: 100%; height: 261px;">
+    <li class="nav-header">
+        Navigointi tässä jumalauta
+    </li>
+    <%
+    var i;
+    for(i = 0; i < rows.length; i++) {
+    %>
+        <li>
+            <a href="#<%=rows[i].url%>"><%=rows[i].name%></a>
+        </li>
+    <%
+    }
+    %>
+</ul>
