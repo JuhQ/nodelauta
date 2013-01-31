@@ -2,6 +2,7 @@ define([
   'jquery',
   'underscore',
   'backbone',
+  'libs/moment',
   'collections/threads',
   'text!templates/posts.html'
   ],
@@ -9,6 +10,7 @@ define([
     $,
     _,
     Backbone,
+    Moment,
     ThreadsCollection,
     Template
   ) {
@@ -19,9 +21,9 @@ define([
         var that = this,
             collection;
 
-        collection = new ThreadsCollection({ board: this.options.board });
+        collection = new ThreadsCollection({ board: this.options.board.get("id") });
         collection.fetch({success: function() {
-          that.$el.html(_.template(Template, { board: that.options.board, collection: collection }));
+          that.$el.html(_.template(Template, { board: that.options.board.get("url"), collection: collection }));
         }})
 
       }

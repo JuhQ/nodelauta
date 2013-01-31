@@ -6,7 +6,7 @@ define([
         Model
         ) {
     return Backbone.Collection.extend({
-        url: "/thread/:board",
+        url: "/boards/:board",
         model: Model,
         initialize: function(options) {
             this.url = this.url.replace(":board", options.board);

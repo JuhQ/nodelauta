@@ -1,7 +1,7 @@
 /*
  * GET home page.
  */
-function getBoards(callback) {
+function getBoards(req, res, callback) {
     var connection = require("../modules/mysql").db();
 
     connection.query(
@@ -20,11 +20,11 @@ function getBoards(callback) {
     });
 }
 exports.index = function(req, res) {
-    getBoards(function(rows) {
+    getBoards(req, res, function(rows) {
         console.log(rows);
         res.render('index', { title: 'Nodelauta', rows: rows });
     });
 };
 exports.boards = function(req, res) {
-    getBoards();
+    getBoards(req, res);
 };

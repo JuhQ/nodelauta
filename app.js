@@ -32,7 +32,8 @@ app.configure('development', function(){
 
 app.get('/', routes.index);
 app.get('/boards', routes.boards);
-app.get('/thread/:id', threads.get);
+app.get('/boards/:id', threads.getThreads);
+app.get('/thread/:id', threads.getPosts);
 app.post('/post/:id', threads.post);
 
 http.createServer(app).listen(app.get('port'), function(){

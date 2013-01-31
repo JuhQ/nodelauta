@@ -19,15 +19,18 @@ collection.each(function(model) {
         %>
 
         <div class="span<%=span%>">
-            <i class="pull-left icon-time"></i>
-            <div class="pull-left">
-                &nbsp;<a href="#<%=board%>/<%=model.get("id")%>">2013-01-12 21:00:00</a>
+            <p class="pull-left">
+                <%=_.escape(model.get("title"))%>
+            </p>
+            <div class="pull-right">
+                &nbsp;<a href="#<%=board%>/<%=model.get("id")%>"><%=moment(model.get("created")).calendar()%></a>
             </div>
+            <i class="pull-right icon-time"></i>
             <div class="clearfix"></div>
             <hr>
           <div>
             <p>
-              <%=_.escape(model.get("content"))%>
+              <%=_.escape(model.get("content")).replace(/\n/g, "<br />")%>
             </p>
           </div>
         </div>

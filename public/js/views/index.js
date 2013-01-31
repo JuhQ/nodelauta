@@ -2,40 +2,46 @@ define([
   'jquery',
   'underscore',
   'backbone',
-  'collections/threads',
-  'views/navigation',
   'views/posts',
-  'views/post-form',
-  'text!templates/index.html'
+  'views/post-form'
   ],
   function(
     $,
     _,
     Backbone,
-    ThreadsCollection,
-    NavigationView,
     PostsView,
-    PostFormView,
-    Template
+    PostFormView
   ) {
 
     return Backbone.View.extend({
-      el: ".yay-for-content",
+      postForm: null,
+      board: null,
       initialize: function() {
-        var board = this.options.board || "b",
-            that = this,
-            collection,
-            postForm;
+        var boardUrl = this.options.board || window.utils.boardCollection.at(0).get("url"),
+            that = this;
 
         console.log("threadid ", this.id)
 
-        postForm = new PostFormView({ board: board });
-        new PostsView({ board: board });
-
-        postForm.model.on("request", function() {
-          new PostsView({ board: board });
+        this.board = window.utils.boardCollection.find(function(board) {
+          return board.get("url") === boardUrl;
         });
 
+        if(!window.utils.postForm) {
+          window.utils.postForm = new PostFormView();
+        }
+
+        window.utils.postForm.render({ board: this.board });
+        new PostsView({ board: this.board });
+
+        window.utils.postForm.model.on("request", function() {
+          new PostsView({ board: that.board });
+        });
+
+      },
+      remove: function() {
+        window.utils.postForm.model.off("request");
+
+        Backbone.View.prototype.remove.call(this);
       }
     });
 });

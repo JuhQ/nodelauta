@@ -22,9 +22,14 @@ define([
         _,
         Backbone
     ) {
-        require(["router/router", "bootstrap"], function(Router, bootstrap) {
-            new Router();
-            Backbone.history.start();
+        require(["router/router", "bootstrap", "utils/utils"], function(Router, bootstrap, Utils) {
+
+            Utils.boardCollection.fetch();
+            Utils.boardCollection.on("sync", function(e) {
+                window.utils = Utils;
+                window.router = new Router();
+                Backbone.history.start();
+            });
 
 
             // jQuery creates it's own event object, and it doesn't have a
