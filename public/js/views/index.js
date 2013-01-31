@@ -24,13 +24,17 @@ define([
       initialize: function() {
         var board = this.options.board || "b",
             that = this,
-            collection;
+            collection,
+            postForm;
 
         console.log("threadid ", this.id)
 
-        new PostFormView({ board: board });
+        postForm = new PostFormView({ board: board });
         new PostsView({ board: board });
 
+        postForm.model.on("request", function() {
+          new PostsView({ board: board });
+        });
 
       }
     });

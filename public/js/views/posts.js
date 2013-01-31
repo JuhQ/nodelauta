@@ -19,7 +19,6 @@ define([
         var that = this,
             collection;
 
-
         collection = new ThreadsCollection({ board: this.options.board });
         collection.fetch({success: function() {
           that.$el.html(_.template(Template, { board: that.options.board, collection: collection }));

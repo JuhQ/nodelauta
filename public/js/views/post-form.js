@@ -17,6 +17,7 @@ define([
 
     return Backbone.View.extend({
         el: ".post-form-container",
+        model: Model,
         events: {
             "drop .drop": "drop",
             "change input[type='file']": "drop",
@@ -25,6 +26,9 @@ define([
         },
 
         initialize: function() {
+            _.bindAll(this, "save");
+
+            this.model = new Model();
             this.$el.html(_.template(Template, { board: this.options.board }));
             if(!_.isUndefined(FileReader)) {
                 this.$("label:has(input[type='file'])").hide();
@@ -33,9 +37,15 @@ define([
 
         save: function(event) {
             event.preventDefault();
-            var model = new Model(Backbone.Syphon.serialize(this));
+            var that = this;
 
-            model.save();
+            this.model.save(Backbone.Syphon.serialize(this));
+
+            // BUG first event is error
+            this.model.on("all", function(e) {
+                that.$("input, textarea").val("");
+                that.$(".drop p").remove();
+            });
         },
 
         drop: function(event) {
