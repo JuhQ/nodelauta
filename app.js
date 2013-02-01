@@ -2,7 +2,9 @@
 Module dependencies.
 */
 
-var app, express, http, path, routes, threads;
+var app, express, http, mongoose, path, routes, threads;
+
+mongoose = require('mongoose');
 
 express = require("express");
 
@@ -13,6 +15,8 @@ threads = require("./routes/threads");
 http = require("http");
 
 path = require("path");
+
+mongoose = require('mongoose');
 
 app = express();
 
@@ -37,6 +41,8 @@ app.configure("development", function() {
   return app.use(express.errorHandler());
 });
 
+mongoose.connect('localhost', 'nodelauta');
+
 app.get("/", routes.index);
 
 app.get("/boards", routes.boards);
@@ -44,6 +50,8 @@ app.get("/boards", routes.boards);
 app.get("/boards/:id", threads.getThreads);
 
 app.get("/thread/:id", threads.getPosts);
+
+app.post("/createBoard", routes.createBoard);
 
 app.post("/post/:id", threads.post);
 

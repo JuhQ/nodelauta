@@ -1,25 +1,40 @@
-exports.getThreads = (req, res) ->
-  connection = require("../modules/mysql").db()
-  connection.query "SELECT * FROM posts WHERE threadid IS NULL AND boardid = ? ORDER BY lastpost DESC", [req.params["id"]], (err, rows, fields) ->
-    throw err  if err
-    res.send rows
+mongoose = require('mongoose')
 
+schema = mongoose.Schema {
+  threadid: 'string'
+  boardid: 'string'
+  title: 'string'
+  content: 'string'
+  image: 'string'
+  created: 'string'
+  lastpost: 'string'
+}
+
+exports.getThreads = (req, res) ->
+  console.log(req.params['id'])
+  posts = mongoose.model 'posts', schema
+  posts.find { boardid: req.params['id'], threadid: 0 }, (err, data) ->
+    data.sort({ lastpost: 'desc' })
+    res.send data
 
 exports.getPosts = (req, res) ->
-  connection = require("../modules/mysql").db()
-  connection.query "SELECT * FROM posts WHERE threadid = ? ORDER BY created DESC", [req.params["id"]], (err, rows, fields) ->
-    throw err  if err
-    res.send rows
-
+  posts = mongoose.model 'posts', schema
+  posts.find { threadid: req.params['id'] }, (err, data) ->
+    res.send data
 
 exports.post = (req, res) ->
-  connection = require("../modules/mysql").db()
-  fs = require("fs")
-  connection.query "INSERT INTO posts (threadid, boardid, title, content, image, created, lastpost) VALUES (?,?,?,?,?,NOW(),NOW())", [req.body.thread, req.body.board, req.body.title, req.body.content, req.body.base64], (err, rows, fields) ->
-    throw err  if err
+  posts = mongoose.model 'posts', schema
+  post = new posts {
+    threadid: req.body.thread or 0
+    boardid: req.body.board
+    title: req.body.title
+    content: req.body.content
+    image: req.body.base64
+    created: new Date()
+    lastpost: new Date()
+  }
+  post.save (err) ->
+    console.log 'row saved'
 
-  if req.body.thread
-    connection.query "UPDATE posts SET lastpost = NOW() WHERE id = ?", [req.body.thread], (err, rows, fields) ->
-      throw err  if err
-
-  res.send "post " + req.body.id
+  res.send "ok"
+  

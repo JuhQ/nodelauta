@@ -6,3 +6,5 @@ hurr
 while durr < herp
   document.write herp + derp + hurr + durr
   derp++
+
+herp or derp or hurr and durr or derp

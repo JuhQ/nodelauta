@@ -1,6 +1,6 @@
 {
   "name": "nodelauta",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "private": true,
   "scripts": {
     "start": "node app"
@@ -9,6 +9,6 @@
     "express": "3.0.4",
     "ejs": "*",
     "less-middleware": "*",
-    "mysql": "*"
+    "mongoose": "*"
   }
 }

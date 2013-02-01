@@ -1,14 +1,19 @@
-#
-# * GET home page.
-# 
+mongoose = require('mongoose')
+
+schema = mongoose.Schema {
+  name: 'string'
+  url: 'string'
+  sticky: 'boolean'
+}
+
 getBoards = (req, res, callback) ->
-  connection = require("../modules/mysql").db()
-  connection.query "SELECT * FROM boards ORDER BY sticky DESC, name ASC", [], (err, rows, fields) ->
-    throw err  if err
+  boards = mongoose.model 'boards', schema
+
+  boards.find { }, (err, data) ->
     unless callback
-      res.send rows
+      res.send data
     else
-      callback rows
+      callback data
 
 exports.index = (req, res) ->
   getBoards req, res, (rows) ->
@@ -17,7 +22,16 @@ exports.index = (req, res) ->
       title: "Nodelauta"
       rows: rows
 
-
-
 exports.boards = (req, res) ->
   getBoards req, res
+
+exports.createBoard = (req, res) ->
+  console.log "creating board"
+  boards = mongoose.model 'boards', schema
+  board = new boards {
+    name: req.body.name
+    url: req.body.url
+    sticky: req.body.sticky
+  }
+  board.save (err) ->
+    console.log 'row saved'

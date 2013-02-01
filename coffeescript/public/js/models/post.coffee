@@ -6,6 +6,4 @@ define ["backbone"], (Backbone) ->
       content: ""
 
     initialize: (options) ->
-      @url = @url.replace(":id", options.id)  if options and options.id
-
-
+      @url = @url.replace(":id", options.id) if options and options.id

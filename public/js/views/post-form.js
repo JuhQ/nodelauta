@@ -11,9 +11,11 @@ define(["jquery", "underscore", "backbone", "models/post", "text!templates/post-
       this._configure(options || {});
       _.bindAll(this, "save");
       this.model = new Model();
-      this.$el.html(_.template(Template, {
-        board: this.options.board.get("id")
-      }));
+      if (this.options.board) {
+        this.$el.html(_.template(Template, {
+          board: this.options.board.get("_id")
+        }));
+      }
       if (!_.isUndefined(FileReader)) {
         this.$("label:has(input[type='file'])").hide();
       }
@@ -25,7 +27,7 @@ define(["jquery", "underscore", "backbone", "models/post", "text!templates/post-
       that = this;
       this.model.save(Backbone.Syphon.serialize(this));
       return this.model.on("all", function(e) {
-        that.$("input, textarea").val("");
+        that.$("input:not(input[name='board']), textarea").val("");
         return that.$(".drop p").remove();
       });
     }

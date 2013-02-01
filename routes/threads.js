@@ -1,58 +1,56 @@
+var mongoose, schema;
+
+mongoose = require('mongoose');
+
+schema = mongoose.Schema({
+  threadid: 'string',
+  boardid: 'string',
+  title: 'string',
+  content: 'string',
+  image: 'string',
+  created: 'string',
+  lastpost: 'string'
+});
 
 exports.getThreads = function(req, res) {
-    var connection = require("../modules/mysql").db();
-
-    connection.query(
-        'SELECT * FROM posts WHERE threadid IS NULL AND boardid = ? ORDER BY lastpost DESC',
-        [req.params['id']],
-        function(err, rows, fields) {
-        if (err) {
-            throw err;
-        }
-
-        res.send(rows);
+  var posts;
+  console.log(req.params['id']);
+  posts = mongoose.model('posts', schema);
+  return posts.find({
+    boardid: req.params['id'],
+    threadid: 0
+  }, function(err, data) {
+    data.sort({
+      lastpost: 'desc'
     });
+    return res.send(data);
+  });
 };
 
 exports.getPosts = function(req, res) {
-    var connection = require("../modules/mysql").db();
-
-    connection.query(
-        'SELECT * FROM posts WHERE threadid = ? ORDER BY created DESC',
-        [req.params['id']],
-        function(err, rows, fields) {
-        if (err) {
-            throw err;
-        }
-
-        res.send(rows);
-    });
+  var posts;
+  posts = mongoose.model('posts', schema);
+  return posts.find({
+    threadid: req.params['id']
+  }, function(err, data) {
+    return res.send(data);
+  });
 };
 
 exports.post = function(req, res) {
-    var connection = require("../modules/mysql").db(),
-        fs = require('fs');
-
-    connection.query(
-        'INSERT INTO posts (threadid, boardid, title, content, image, created, lastpost) VALUES (?,?,?,?,?,NOW(),NOW())',
-        [req.body.thread,req.body.board,req.body.title,req.body.content,req.body.base64],
-        function(err, rows, fields) {
-        if (err) {
-            throw err;
-        }
-
-    });
-
-    if(req.body.thread) {
-        connection.query(
-            'UPDATE posts SET lastpost = NOW() WHERE id = ?',
-            [req.body.thread],
-            function(err, rows, fields) {
-            if (err) {
-                throw err;
-            }
-        });
-    }
-
-    res.send("post " + req.body.id);
+  var post, posts;
+  posts = mongoose.model('posts', schema);
+  post = new posts({
+    threadid: req.body.thread || 0,
+    boardid: req.body.board,
+    title: req.body.title,
+    content: req.body.content,
+    image: req.body.base64,
+    created: new Date(),
+    lastpost: new Date()
+  });
+  post.save(function(err) {
+    return console.log('row saved');
+  });
+  return res.send("ok");
 };

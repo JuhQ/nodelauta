@@ -1,13 +1,15 @@
-
 ###
 Module dependencies.
 ###
+mongoose = require('mongoose')
 express = require("express")
 routes = require("./routes")
 threads = require("./routes/threads")
 http = require("http")
 path = require("path")
+mongoose = require('mongoose')
 app = express()
+
 app.configure ->
   app.set "port", process.env.PORT or 3000
   app.set "views", __dirname + "/views"
@@ -25,11 +27,15 @@ app.configure ->
 app.configure "development", ->
   app.use express.errorHandler()
 
+mongoose.connect 'localhost', 'nodelauta'
+
 app.get "/", routes.index
 app.get "/boards", routes.boards
 app.get "/boards/:id", threads.getThreads
 app.get "/thread/:id", threads.getPosts
+
+app.post "/createBoard", routes.createBoard
 app.post "/post/:id", threads.post
+
 http.createServer(app).listen app.get("port"), ->
   console.log "Express server listening on port " + app.get("port")
-

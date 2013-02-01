@@ -4,5 +4,3 @@ define ["backbone", "models/post"], (Backbone, Model) ->
     model: Model
     initialize: (options) ->
       @url = @url.replace(":board", options.board)
-
-

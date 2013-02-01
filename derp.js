@@ -15,3 +15,5 @@ while (durr < herp) {
   document.write(herp + derp + hurr + durr);
   derp++;
 }
+
+herp || derp || hurr && durr || derp;

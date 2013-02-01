@@ -1,4 +1,21 @@
-define ["jquery", "underscore", "backbone", "models/post", "text!templates/post-form.html", "views/filedrop", "libs/backbone.syphon"], ($, _, Backbone, Model, Template, Filedrop, Syphon) ->
+define [
+  "jquery"
+  "underscore"
+  "backbone"
+  "models/post"
+  "text!templates/post-form.html"
+  "views/filedrop"
+  "libs/backbone.syphon"
+  ], (
+    $
+    _
+    Backbone
+    Model
+    Template
+    Filedrop
+    Syphon
+    ) ->
+
   Backbone.View.extend
     el: ".post-form-container"
     model: Model
@@ -9,11 +26,15 @@ define ["jquery", "underscore", "backbone", "models/post", "text!templates/post-
     render: (options) ->
       @_configure options or {}
       _.bindAll this, "save"
+
       @model = new Model()
-      @$el.html _.template(Template,
-        board: @options.board.get("id")
-      )
-      @$("label:has(input[type='file'])").hide()  unless _.isUndefined(FileReader)
+
+      if(@options.board)
+        @$el.html _.template(Template,
+          board: @options.board.get("_id")
+        )
+
+      @$("label:has(input[type='file'])").hide() unless _.isUndefined(FileReader)
       new Filedrop()
 
     save: (event) ->
@@ -23,8 +44,5 @@ define ["jquery", "underscore", "backbone", "models/post", "text!templates/post-
       
       # BUG first event is error
       @model.on "all", (e) ->
-        that.$("input, textarea").val ""
+        that.$("input:not(input[name='board']), textarea").val ""
         that.$(".drop p").remove()
-
-
-

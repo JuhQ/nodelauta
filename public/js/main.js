@@ -4,7 +4,6 @@ requirejs.config({
   enforceDefine: true,
   paths: {
     jquery: "http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min",
-    jsapi: "http://www.google.com/jsapi?callback=define",
     backbone: "libs/backbone",
     underscore: "libs/underscore",
     text: "libs/text",
@@ -12,8 +11,8 @@ requirejs.config({
   }
 });
 
-define(["jquery", "underscore", "backbone", "jsapi"], function($, _, Backbone) {
-  return require(["router/router", "bootstrap", "utils/utils"], function(Router, bootstrap, Utils) {
+define(["jquery", "underscore", "backbone"], function($, _, Backbone) {
+  return require(["router/router", "bootstrap", "utils/utils", "libs/fastclick"], function(Router, bootstrap, Utils, Fastclick) {
     Utils.boardCollection.fetch();
     Utils.boardCollection.on("sync", function(e) {
       window.utils = Utils;
@@ -21,6 +20,9 @@ define(["jquery", "underscore", "backbone", "jsapi"], function($, _, Backbone) {
       return Backbone.history.start();
     });
     $.event.props.push("dataTransfer");
-    return $("body").bind("dragenter dragover", false);
+    $("body").bind("dragenter dragover", false);
+    return window.addEventListener("load", (function() {
+      return new FastClick(document.body);
+    }), false);
   });
 });

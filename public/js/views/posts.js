@@ -5,9 +5,11 @@ define(["jquery", "underscore", "backbone", "libs/moment", "collections/threads"
     initialize: function() {
       var collection, that;
       that = this;
-      collection = void 0;
+      if (!this.options.board) {
+        return;
+      }
       collection = new ThreadsCollection({
-        board: this.options.board.get("id")
+        board: this.options.board.get("_id")
       });
       return collection.fetch({
         success: function() {

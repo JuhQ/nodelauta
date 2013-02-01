@@ -4,8 +4,11 @@ define(["jquery", "underscore", "backbone", "views/posts", "views/post-form"], f
     postForm: null,
     board: null,
     initialize: function() {
-      var boardUrl, that;
-      boardUrl = this.options.board || window.utils.boardCollection.at(0).get("url");
+      var boardUrl, defaultUrl, that;
+      if (window.utils.boardCollection.at(0)) {
+        defaultUrl = window.utils.boardCollection.at(0).get("url");
+      }
+      boardUrl = this.options.board || defaultUrl || "";
       that = this;
       console.log("threadid ", this.id);
       this.board = window.utils.boardCollection.find(function(board) {
