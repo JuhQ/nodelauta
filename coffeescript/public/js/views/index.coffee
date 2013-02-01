@@ -20,19 +20,18 @@ define [
       boardUrl = @options.board or defaultUrl or ""
       that = this
 
-      console.log "threadid ", @id
+      console.log "threadid ", @.options.thread
 
       @board = window.utils.boardCollection.find((board) ->
         board.get("url") is boardUrl
       )
 
       window.utils.postForm = new PostFormView() unless window.utils.postForm
-      window.utils.postForm.render board: @board
+      window.utils.postForm.render board: @board, thread: @.options.thread
       new PostsView(board: @board)
 
       window.utils.postForm.model.on "request", ->
         new PostsView(board: that.board)
-
 
     remove: ->
       window.utils.postForm.model.off "request"

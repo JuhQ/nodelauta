@@ -14,11 +14,15 @@ schema = mongoose.Schema({
 
 exports.getThreads = function(req, res) {
   var posts;
-  console.log(req.params['id']);
   posts = mongoose.model('posts', schema);
   return posts.find({
     boardid: req.params['id'],
     threadid: 0
+  }, {
+    '__v': 0,
+    'threadid': 0,
+    'boardid': 0,
+    'created': 0
   }, function(err, data) {
     data.sort({
       lastpost: 'desc'
@@ -50,7 +54,7 @@ exports.post = function(req, res) {
     lastpost: new Date()
   });
   post.save(function(err) {
-    return console.log('row saved');
+    return console.log('Post saved');
   });
   return res.send("ok");
 };

@@ -2,6 +2,9 @@
 define(["jquery", "underscore", "backbone", "libs/moment", "collections/threads", "text!templates/posts.html"], function($, _, Backbone, Moment, ThreadsCollection, Template) {
   return Backbone.View.extend({
     el: ".posts",
+    events: {
+      "click img": "toggleImage"
+    },
     initialize: function() {
       var collection, that;
       that = this;
@@ -19,6 +22,9 @@ define(["jquery", "underscore", "backbone", "libs/moment", "collections/threads"
           }));
         }
       });
+    },
+    toggleImage: function(event) {
+      return $(event.currentTarget).parent().toggleClass("span12 span3");
     }
   });
 });

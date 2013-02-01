@@ -23,7 +23,7 @@ collection.each(function(model) {
                 <%=_.escape(model.get("title"))%>
             </p>
             <div class="pull-right">
-                &nbsp;<a href="#<%=board%>/<%=model.get("id")%>"><%=moment(model.get("created")).calendar()%></a>
+                <a href="#<%=board%>/<%=model.get("_id")%>" class="thread-link"><%=moment(model.get("created")).calendar()%></a>
             </div>
             <i class="pull-right icon-time"></i>
             <div class="clearfix"></div>

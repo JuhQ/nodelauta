@@ -16,6 +16,10 @@ define(["jquery", "underscore", "backbone", "models/post", "text!templates/post-
           board: this.options.board.get("_id")
         }));
       }
+      if (options.thread) {
+        this.$("textarea").val(">>" + options.thread);
+        this.$("input[name='thread']").val(options.thread);
+      }
       if (!_.isUndefined(FileReader)) {
         this.$("label:has(input[type='file'])").hide();
       }

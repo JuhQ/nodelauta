@@ -15,6 +15,9 @@ define [
     ) ->
   Backbone.View.extend
     el: ".posts"
+    events: {
+      "click img": "toggleImage"
+    }
     initialize: ->
       that = this
 
@@ -27,3 +30,6 @@ define [
           board: that.options.board.get("url")
           collection: collection
         )
+
+    toggleImage: (event) ->
+      $(event.currentTarget).parent().toggleClass "span12 span3"

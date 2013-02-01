@@ -34,6 +34,9 @@ define [
           board: @options.board.get("_id")
         )
 
+      if options.thread
+        @$("textarea").val(">>" + options.thread)
+        @$("input[name='thread']").val(options.thread)
       @$("label:has(input[type='file'])").hide() unless _.isUndefined(FileReader)
       new Filedrop()
 

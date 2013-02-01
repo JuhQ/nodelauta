@@ -10,7 +10,7 @@ define(["jquery", "underscore", "backbone", "views/posts", "views/post-form"], f
       }
       boardUrl = this.options.board || defaultUrl || "";
       that = this;
-      console.log("threadid ", this.id);
+      console.log("threadid ", this.options.thread);
       this.board = window.utils.boardCollection.find(function(board) {
         return board.get("url") === boardUrl;
       });
@@ -18,7 +18,8 @@ define(["jquery", "underscore", "backbone", "views/posts", "views/post-form"], f
         window.utils.postForm = new PostFormView();
       }
       window.utils.postForm.render({
-        board: this.board
+        board: this.board,
+        thread: this.options.thread
       });
       new PostsView({
         board: this.board
