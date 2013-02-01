@@ -1,8 +1,17 @@
-var herp = 0;
-var derp = 0;
-var hurr = 0;
-var durr = 0;
+var derp, durr, herp, hurr;
 
-for( hurr; durr < herp; derp++ ) {
-  document.write( herp + derp + hurr + durr);
+herp = 0;
+
+derp = 0;
+
+hurr = 0;
+
+durr = 0;
+
+hurr;
+
+
+while (durr < herp) {
+  document.write(herp + derp + hurr + durr);
+  derp++;
 }
