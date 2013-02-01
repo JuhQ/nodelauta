@@ -16,14 +16,21 @@ define([
             "drop body": "drop"
         },
 
+        initialize: function() {
+            if(!_.isUndefined(FileReader)) {
+                this.fileReader = new FileReader();
+            }
+        },
+
         drop: function(event) {
-            var element = $(".drop")
+            var element = $(".drop"),
+                that = this,
                 files = null;
 
             event.stopPropagation();
             event.preventDefault();
 
-            if(_.isUndefined(FileReader)) {
+            if(_.isUndefined(this.fileReader)) {
                 return;
             }
 
@@ -40,15 +47,14 @@ define([
 
             // FIXME: for now, only the last image is uploaded to the server
             $.each(files, function(index, file) {
-                var fileReader = new FileReader();
-                    fileReader.onload = (function(file) {
-                        return function(e) {
-                            element.append('<p><strong>filename ' + file.name + '</strong><br />' +
-                            '<img src="' + e.target.result + '" /"></p>');
-                            $("input[name='base64']").val(e.target.result);
-                        }; 
-                    })(file);
-                fileReader.readAsDataURL(file);
+                that.fileReader.onload = (function(file) {
+                    return function(e) {
+                        element.append('<p><strong>filename ' + file.name + '</strong><br />' +
+                        '<img src="' + e.target.result + '" /"></p>');
+                        $("input[name='base64']").val(e.target.result);
+                    }; 
+                })(file);
+                that.fileReader.readAsDataURL(file);
             });
         }
 
