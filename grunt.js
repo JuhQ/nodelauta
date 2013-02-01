@@ -1,29 +1,13 @@
-/*
- * grunt
- * http://gruntjs.com/
- *
- * Copyright (c) 2012 "Cowboy" Ben Alman
- * Licensed under the MIT license.
- * https://github.com/gruntjs/grunt/blob/master/LICENSE-MIT
- */
 
 module.exports = function(grunt) {
-
-  // Project configuration.
   grunt.initConfig({
     lint: {
-      all: [
-        'grunt.js',
-        'app/modules/*.js',
-        'app/routes/*.js',
-        'app/public/js/*.js',
-        'app/*.js'
-      ]
+      all: ["grunt.js", "app/modules/*.js", "app/routes/*.js", "app/public/js/*.js", "app/*.js"]
     },
     watch: {
       scripts: {
-        files: '<config:lint.all>',
-        tasks: 'lint test'
+        files: "<config:lint.all>",
+        tasks: "lint test"
       }
     },
     jshint: {
@@ -52,8 +36,5 @@ module.exports = function(grunt) {
       }
     }
   });
-
-  // Default task.
-  grunt.registerTask('default', 'lint');
-
+  return grunt.registerTask("default", "lint");
 };
