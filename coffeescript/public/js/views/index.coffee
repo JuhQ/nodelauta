@@ -33,6 +33,28 @@ define [
       window.utils.postForm.model.on "request", ->
         new PostsView(board: that.board)
 
+      @anchorNavigation()       
+
     remove: ->
       window.utils.postForm.model.off "request"
       Backbone.View::remove.call this
+
+    anchorNavigation: () ->
+      h1 = $("h1")
+      headerHeight = (h1.height() + h1.offset().top)
+      navi = $(".sidebar-nav")
+      naviWidth = navi.width()
+      $window = $(window)
+      mq = window.matchMedia "(min-width: 768px)" if window.matchMedia
+
+      $window.on "scroll resize" ->
+        if $window.scrollTop() > headerHeight
+          navi.addClass "fixed"
+          if mq and mq.matches
+            navi.css "position": "fixed", "top": 0, "width": naviWidth
+          else
+            navi.removeClass "fixed"
+            navi.css "position": "relative", "width": ""
+        else
+          navi.removeClass "fixed"
+          navi.css "position": "relative", "width": ""
