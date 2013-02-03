@@ -1,4 +1,4 @@
-define ["backbone", "models/post"], (Backbone, Model) ->
+define ["backbone", "models/thread"], (Backbone, Model) ->
   Backbone.Collection.extend
     url: "/boards/:board"
     model: Model

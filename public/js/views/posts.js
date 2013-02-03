@@ -1,32 +1,45 @@
 
-define(["jquery", "underscore", "backbone", "libs/moment", "collections/threads", "text!templates/posts.html"], function($, _, Backbone, Moment, ThreadsCollection, Template) {
+define(["jquery", "underscore", "backbone", "libs/moment", "collections/threads", "collections/posts", "text!templates/posts.html", "text!templates/replies.html"], function($, _, Backbone, Moment, ThreadsCollection, PostsCollection, ThreadTemplate, PostTemplate) {
   return Backbone.View.extend({
     el: ".posts",
     events: {
       "click img": "toggleImage"
     },
     render: function(options) {
-      var collection, that;
+      var that, threads;
       this._configure(options || {});
       that = this;
       if (!this.options.board) {
         return;
       }
-      collection = new ThreadsCollection({
+      threads = new ThreadsCollection({
         board: this.options.board.get("_id")
       });
-      return collection.fetch({
+      return threads.fetch({
         success: function() {
-          return that.$el.html(_.template(Template, {
+          var _this = this;
+          that.$el.html(_.template(ThreadTemplate, {
             board: that.options.board.get("url"),
-            collection: collection
+            collection: threads
           }));
+          return threads.each(function(model) {
+            var posts;
+            posts = new PostsCollection({
+              thread: model.get("_id")
+            });
+            return posts.fetch({
+              success: function() {
+                return that.$el.find("#" + model.get("_id") + " .replies").html(_.template(PostTemplate, {
+                  board: that.options.board.get("url"),
+                  collection: posts
+                }));
+              }
+            });
+          });
         }
       });
     },
     toggleImage: function(event) {
-      console.log($(event.target));
-      console.log($(event.currentTarget).parent());
       return $(event.target).parent("div").toggleClass("span3 span12");
     }
   });

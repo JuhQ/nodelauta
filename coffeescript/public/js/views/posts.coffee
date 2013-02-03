@@ -4,14 +4,18 @@ define [
   "backbone"
   "libs/moment"
   "collections/threads"
+  "collections/posts"
   "text!templates/posts.html"
+  "text!templates/replies.html"
   ], (
     $
     _
     Backbone
     Moment
     ThreadsCollection
-    Template
+    PostsCollection
+    ThreadTemplate
+    PostTemplate
     ) ->
   Backbone.View.extend
     el: ".posts"
@@ -24,16 +28,22 @@ define [
       that = this
 
       return unless @options.board
-      collection = new ThreadsCollection(board: @options.board.get("_id"))
+      threads = new ThreadsCollection board: @options.board.get "_id"
+      threads.fetch success: ->
 
-      collection.fetch success: ->
-
-        that.$el.html _.template(Template,
+        that.$el.html _.template(ThreadTemplate,
           board: that.options.board.get("url")
-          collection: collection
+          collection: threads
         )
 
+        threads.each (model) =>
+          posts = new PostsCollection thread: model.get "_id"
+          posts.fetch success: ->
+            that.$el.find("#" + model.get("_id") + " .replies").html _.template(PostTemplate,
+              board: that.options.board.get("url")
+              collection: posts
+            )
+
+
     toggleImage: (event) ->
-      console.log $(event.target)
-      console.log $(event.currentTarget).parent()
       $(event.target).parent("div").toggleClass "span3 span12"

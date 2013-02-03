@@ -21,8 +21,7 @@ exports.getThreads = function(req, res) {
   }, {
     '__v': 0,
     'threadid': 0,
-    'boardid': 0,
-    'created': 0
+    'boardid': 0
   }, function(err, data) {
     data.sort({
       lastpost: 'desc'

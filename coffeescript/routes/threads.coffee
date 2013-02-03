@@ -12,7 +12,7 @@ schema = mongoose.Schema {
 
 exports.getThreads = (req, res) ->
   posts = mongoose.model 'posts', schema
-  posts.find { boardid: req.params['id'], threadid: 0 }, { '__v': 0, 'threadid': 0, 'boardid': 0, 'created': 0 }, (err, data) ->
+  posts.find { boardid: req.params['id'], threadid: 0 }, { '__v': 0, 'threadid': 0, 'boardid': 0 }, (err, data) ->
     data.sort({ lastpost: 'desc' })
     res.send data
 

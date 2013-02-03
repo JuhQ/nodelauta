@@ -30,7 +30,7 @@ define(["jquery", "underscore", "backbone", "views/posts", "views/post-form"], f
       window.utils.postForm.model.on("request", function() {
         return window.utils.postsView.render({
           board: this.board,
-          thread: this.options.thread
+          thread: that.options.thread
         });
       });
       return this.anchorNavigation();

@@ -31,7 +31,7 @@ define [
       window.utils.postsView.render board: @board, thread: @.options.thread
 
       window.utils.postForm.model.on "request", ->
-        window.utils.postsView.render board: @board, thread: @.options.thread
+        window.utils.postsView.render board: @board, thread: that.options.thread
 
       @anchorNavigation()       
 
