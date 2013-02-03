@@ -10,7 +10,6 @@ define(["jquery", "underscore", "backbone", "views/posts", "views/post-form"], f
       }
       boardUrl = this.options.board || defaultUrl || "";
       that = this;
-      console.log("threadid ", this.options.thread);
       this.board = window.utils.boardCollection.find(function(board) {
         return board.get("url") === boardUrl;
       });
@@ -21,12 +20,17 @@ define(["jquery", "underscore", "backbone", "views/posts", "views/post-form"], f
         board: this.board,
         thread: this.options.thread
       });
-      new PostsView({
-        board: this.board
+      if (!window.utils.postsView) {
+        window.utils.postsView = new PostsView();
+      }
+      window.utils.postsView.render({
+        board: this.board,
+        thread: this.options.thread
       });
       window.utils.postForm.model.on("request", function() {
-        return new PostsView({
-          board: that.board
+        return window.utils.postsView.render({
+          board: this.board,
+          thread: this.options.thread
         });
       });
       return this.anchorNavigation();
@@ -36,47 +40,18 @@ define(["jquery", "underscore", "backbone", "views/posts", "views/post-form"], f
       return Backbone.View.prototype.remove.call(this);
     },
     anchorNavigation: function() {
-      var $window, h1, headerHeight, mq, navi, naviWidth;
+      var $window, h1, headerHeight, navi;
       h1 = $("h1");
       headerHeight = h1.height() + h1.offset().top;
       navi = $(".sidebar-nav");
-      naviWidth = navi.width();
       $window = $(window);
-      if (window.matchMedia) {
-        mq = window.matchMedia("(min-width: 768px)");
-      }
-      $window.resize(function() {
-        naviWidth = navi.width();
-        if (mq && mq.matches) {
-          if (navi.hasClass("fixed")) {
-            return navi.css({
-              "width": navi.parent().width() - (parseInt(navi.css("padding")) * 2)
-            });
-          }
-        } else {
-          navi.removeClass("fixed");
-          return navi.css({
-            "position": "relative",
-            "width": ""
+      return $window.on("scroll resize", function() {
+        if ($window.scrollTop() > headerHeight && $window.width() >= 768) {
+          navi.css({
+            "position": "",
+            "width": navi.parent().width() - (parseInt(navi.css("padding")) * 2)
           });
-        }
-      });
-      return $window.scroll(function() {
-        if ($window.scrollTop() > headerHeight) {
-          navi.addClass("fixed");
-          if (mq && mq.matches) {
-            return navi.css({
-              "position": "fixed",
-              "top": 0,
-              "width": naviWidth
-            });
-          } else {
-            navi.removeClass("fixed");
-            return navi.css({
-              "position": "relative",
-              "width": ""
-            });
-          }
+          return navi.addClass("fixed");
         } else {
           navi.removeClass("fixed");
           return navi.css({

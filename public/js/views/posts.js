@@ -5,8 +5,9 @@ define(["jquery", "underscore", "backbone", "libs/moment", "collections/threads"
     events: {
       "click img": "toggleImage"
     },
-    initialize: function() {
+    render: function(options) {
       var collection, that;
+      this._configure(options || {});
       that = this;
       if (!this.options.board) {
         return;
@@ -24,7 +25,9 @@ define(["jquery", "underscore", "backbone", "libs/moment", "collections/threads"
       });
     },
     toggleImage: function(event) {
-      return $(event.currentTarget).parent().toggleClass("span12 span3");
+      console.log($(event.target));
+      console.log($(event.currentTarget).parent());
+      return $(event.target).parent("div").toggleClass("span3 span12");
     }
   });
 });

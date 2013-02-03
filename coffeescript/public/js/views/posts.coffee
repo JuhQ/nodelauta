@@ -18,7 +18,9 @@ define [
     events: {
       "click img": "toggleImage"
     }
-    initialize: ->
+    
+    render: (options) ->
+      @_configure options or {}
       that = this
 
       return unless @options.board
@@ -32,4 +34,6 @@ define [
         )
 
     toggleImage: (event) ->
-      $(event.currentTarget).parent().toggleClass "span12 span3"
+      console.log $(event.target)
+      console.log $(event.currentTarget).parent()
+      $(event.target).parent("div").toggleClass "span3 span12"
