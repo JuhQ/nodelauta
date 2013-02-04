@@ -29,7 +29,8 @@ define [
         @currentView.remove()
         delete currentView
 
-      defaultUrl = window.utils.boardCollection.at(0).get("url") if window.utils.boardCollection.at(0)
+      collection = window.utils.boardCollection
+      defaultUrl = collection.get("url") if collection.at(0)
 
       board = options.board or Backbone.history.fragment or defaultUrl or ""
       @navi.removeClass "active"

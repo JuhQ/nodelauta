@@ -9,6 +9,8 @@
     "express": "3.0.4",
     "ejs": "*",
     "less-middleware": "*",
-    "mongoose": "*"
+    "mongoose": "*",
+    "grunt": "*",
+    "coffeelint": "*"
   }
 }

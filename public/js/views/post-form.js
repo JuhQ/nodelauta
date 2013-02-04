@@ -2,7 +2,6 @@
 define(["jquery", "underscore", "backbone", "models/post", "text!templates/post-form.html", "views/filedrop", "libs/backbone.syphon"], function($, _, Backbone, Model, Template, Filedrop, Syphon) {
   return Backbone.View.extend({
     el: ".post-form-container",
-    model: Model,
     events: {
       "submit form": "save",
       "click .post-button": "save"
@@ -17,7 +16,7 @@ define(["jquery", "underscore", "backbone", "models/post", "text!templates/post-
         }));
       }
       if (options.thread) {
-        this.$("textarea").val(">>" + options.thread);
+        this.$("textarea").focus().val(">>" + options.thread + "\n");
         this.$("input[name='thread']").val(options.thread);
       }
       if (!_.isUndefined(FileReader)) {
@@ -30,8 +29,8 @@ define(["jquery", "underscore", "backbone", "models/post", "text!templates/post-
       event.preventDefault();
       that = this;
       this.model.save(Backbone.Syphon.serialize(this));
-      return this.model.on("all", function(e) {
-        that.$("input:not(input[name='board']), textarea").val("");
+      return this.model.on("sync", function() {
+        that.$("input:not(input[name='id'],input[name='thread']), textarea").val("");
         return that.$(".drop p").remove();
       });
     }

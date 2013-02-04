@@ -3,10 +3,10 @@ define [
   "underscore"
   "backbone"
   ], (
-    $
-    _
-    Backbone
-    ) ->
+  $
+  _
+  Backbone
+  ) ->
   Backbone.View.extend
     el: "html"
     events:

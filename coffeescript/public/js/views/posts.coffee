@@ -8,15 +8,15 @@ define [
   "text!templates/posts.html"
   "text!templates/replies.html"
   ], (
-    $
-    _
-    Backbone
-    Moment
-    ThreadsCollection
-    PostsCollection
-    ThreadTemplate
-    PostTemplate
-    ) ->
+  $
+  _
+  Backbone
+  Moment
+  ThreadsCollection
+  PostsCollection
+  ThreadTemplate
+  PostTemplate
+  ) ->
   Backbone.View.extend
     el: ".posts"
     events: {
@@ -43,7 +43,6 @@ define [
               board: that.options.board.get("url")
               collection: posts
             )
-
 
     toggleImage: (event) ->
       $(event.target).parent("div").toggleClass "span3 span12"

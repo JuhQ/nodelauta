@@ -6,12 +6,12 @@ define [
   "text!templates/create-board.html"
   "libs/backbone.syphon"
   ], (
-    $
-    _
-    Backbone
-    Model
-    Template
-    Syphon
+  $
+  _
+  Backbone
+  Model
+  Template
+  Syphon
     ) ->
   Backbone.View.extend
     el: ".posts"
@@ -26,8 +26,7 @@ define [
     save: (event) ->
       event.preventDefault()
 
-      model = new Model()
-      model.url = "createBoard"
+      model = new Model id: "createBoard"
       model.save Backbone.Syphon.serialize(this)
       
       # BUG first event is error

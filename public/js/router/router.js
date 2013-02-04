@@ -20,13 +20,14 @@ define(["views/index", "views/create-board"], function(IndexView, CreateBoardVie
       return new CreateBoardView();
     },
     setPage: function(Page, options) {
-      var board, defaultUrl;
+      var board, collection, defaultUrl;
       if (this.currentView) {
         this.currentView.remove();
         delete currentView;
       }
-      if (window.utils.boardCollection.at(0)) {
-        defaultUrl = window.utils.boardCollection.at(0).get("url");
+      collection = window.utils.boardCollection;
+      if (collection.at(0)) {
+        defaultUrl = collection.get("url");
       }
       board = options.board || Backbone.history.fragment || defaultUrl || "";
       this.navi.removeClass("active");

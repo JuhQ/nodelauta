@@ -1,4 +1,9 @@
-define ["jquery", "underscore", "backbone", "collections/boards"], ($, _, Backbone, BoardsCollection) ->
+define [
+    "jquery"
+    "underscore"
+    "backbone"
+    "collections/boards"
+    ], ($, _, Backbone, BoardsCollection) ->
 
   Utils = {}
   Utils.boardCollection = new BoardsCollection()

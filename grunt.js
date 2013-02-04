@@ -4,10 +4,22 @@ module.exports = function(grunt) {
     lint: {
       all: ["grunt.js", "app/modules/*.js", "app/routes/*.js", "app/public/js/*.js", "app/*.js"]
     },
+    coffeelint: {
+      app: ['coffeescript/*.coffee', 'coffeescript/**/*.coffee']
+    },
     watch: {
       scripts: {
         files: "<config:lint.all>",
-        tasks: "lint test"
+        tasks: "lint"
+      },
+      coffee: {
+        files: "<config:coffeelint.app>",
+        tasks: "coffeelint"
+      }
+    },
+    coffeelintOptions: {
+      "max_line_length": {
+        "value": 100
       }
     },
     jshint: {
@@ -36,5 +48,7 @@ module.exports = function(grunt) {
       }
     }
   });
-  return grunt.registerTask("default", "lint");
+  grunt.loadNpmTasks("grunt-reload");
+  grunt.loadNpmTasks("grunt-coffeelint");
+  return grunt.registerTask("default", "lint coffeelint");
 };

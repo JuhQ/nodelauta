@@ -1,14 +1,14 @@
 
 define(["backbone"], function(Backbone) {
   return Backbone.Model.extend({
-    url: "/post/:id",
+    urlRoot: "/post",
     defaults: {
       title: "",
       content: ""
     },
-    initialize: function(options) {
-      if (options && options.id) {
-        return this.url = this.url.replace(":id", options.id);
+    validate: function(attributes) {
+      if (!attributes.content.length) {
+        return "error";
       }
     }
   });

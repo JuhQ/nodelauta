@@ -55,6 +55,8 @@ app.post("/createBoard", routes.createBoard);
 
 app.post("/post/:id", threads.post);
 
+app.put("/post/:id", threads.post);
+
 http.createServer(app).listen(app.get("port"), function() {
   return console.log("Express server listening on port " + app.get("port"));
 });

@@ -45,7 +45,7 @@ exports.post = function(req, res) {
   posts = mongoose.model('posts', schema);
   post = new posts({
     threadid: req.body.thread || 0,
-    boardid: req.body.board,
+    boardid: req.body.id,
     title: req.body.title,
     content: req.body.content,
     image: req.body.base64,
@@ -55,5 +55,7 @@ exports.post = function(req, res) {
   post.save(function(err) {
     return console.log('Post saved');
   });
-  return res.send("ok");
+  return res.send({
+    ok: "ok"
+  });
 };

@@ -9,7 +9,12 @@ requirejs.config
     bootstrap: "libs/bootstrap/js/bootstrap.min"
 
 define ["jquery", "underscore", "backbone"], ($, _, Backbone) ->
-  require ["router/router", "bootstrap", "utils/utils", "libs/fastclick"], (Router, bootstrap, Utils, Fastclick) ->
+  require [
+    "router/router"
+    "bootstrap"
+    "utils/utils"
+    "libs/fastclick"
+    ], (Router, bootstrap, Utils, Fastclick) ->
 
     Utils.boardCollection.fetch()
     Utils.boardCollection.on "sync", (e) ->

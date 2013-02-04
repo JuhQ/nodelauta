@@ -5,18 +5,19 @@ define [
   "views/posts"
   "views/post-form"
   ], (
-    $
-    _
-    Backbone
-    PostsView
-    PostFormView
-    ) ->
+  $
+  _
+  Backbone
+  PostsView
+  PostFormView
+  ) ->
 
   Backbone.View.extend
     postForm: null
     board: null
     initialize: ->
-      defaultUrl = window.utils.boardCollection.at(0).get("url") if window.utils.boardCollection.at(0)
+      collection = window.utils.boardCollection
+      defaultUrl = collection.at(0).get("url") if collection.at(0)
       boardUrl = @options.board or defaultUrl or ""
       that = this
 
@@ -30,13 +31,13 @@ define [
       window.utils.postsView = new PostsView() unless window.utils.postsView
       window.utils.postsView.render board: @board, thread: @.options.thread
 
-      window.utils.postForm.model.on "request", ->
-        window.utils.postsView.render board: @board, thread: that.options.thread
+      window.utils.postForm.model.on "sync", ->
+        window.utils.postsView.render board: that.board, thread: that.options.thread
 
-      @anchorNavigation()       
+      @anchorNavigation()
 
     remove: ->
-      window.utils.postForm.model.off "request"
+      window.utils.postForm.model.off "sync"
       Backbone.View::remove.call this
 
     anchorNavigation: () ->
@@ -44,10 +45,11 @@ define [
       headerHeight = (h1.height() + h1.offset().top)
       navi = $(".sidebar-nav")
       $window = $(window)
+      parent = navi.parent()
 
       $window.on "scroll resize", ->
         if $window.scrollTop() > headerHeight and $window.width() >= 768
-          navi.css "position": "", "width": navi.parent().width() - (parseInt(navi.css("padding")) * 2)
+          navi.css "position": "", "width": parent.width() - (parseInt(navi.css("padding")) * 2)
           navi.addClass "fixed"
         else
           navi.removeClass "fixed"

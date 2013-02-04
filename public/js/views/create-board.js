@@ -13,8 +13,9 @@ define(["jquery", "underscore", "backbone", "models/board", "text!templates/crea
     save: function(event) {
       var model;
       event.preventDefault();
-      model = new Model();
-      model.url = "createBoard";
+      model = new Model({
+        id: "createBoard"
+      });
       model.save(Backbone.Syphon.serialize(this));
       return model.on("all", function(e) {
         return that.$("input").val("");
