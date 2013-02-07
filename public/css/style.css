@@ -7,8 +7,12 @@ a {
 .sidebar-nav.fixed {
   position: fixed;
   top: 0;
-  height: 90%;
+  height: 88.5%;
   overflow-y: auto;
+}
+.posts img {
+  max-height: 400px;
+  cursor: pointer;
 }
 .drop {
   font-weight: bold;

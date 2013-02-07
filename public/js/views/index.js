@@ -1,16 +1,22 @@
 
 define(["jquery", "underscore", "backbone", "views/posts", "views/post-form"], function($, _, Backbone, PostsView, PostFormView) {
   return Backbone.View.extend({
+    el: "body",
     postForm: null,
     board: null,
+    events: {
+      "click .sidebar-nav .reload": "reload"
+    },
     initialize: function() {
       var boardUrl, collection, defaultUrl, that;
+      _.bindAll(this, "reload");
       collection = window.utils.boardCollection;
       if (collection.at(0)) {
         defaultUrl = collection.at(0).get("url");
       }
       boardUrl = this.options.board || defaultUrl || "";
       that = this;
+      $(".sidebar-nav .reload").tooltip();
       this.board = window.utils.boardCollection.find(function(board) {
         return board.get("url") === boardUrl;
       });
@@ -39,6 +45,13 @@ define(["jquery", "underscore", "backbone", "views/posts", "views/post-form"], f
     remove: function() {
       window.utils.postForm.model.off("sync");
       return Backbone.View.prototype.remove.call(this);
+    },
+    reload: function(event) {
+      event.preventDefault();
+      return window.utils.postsView.render({
+        board: this.board,
+        thread: this.options.thread
+      });
     },
     anchorNavigation: function() {
       var $window, h1, headerHeight, navi, parent;

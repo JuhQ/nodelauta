@@ -51,7 +51,7 @@ app.get("/boards/:id", threads.getThreads);
 
 app.get("/thread/:id", threads.getPosts);
 
-app.post("/createBoard", routes.createBoard);
+app.put("/board/createBoard", routes.createBoard);
 
 app.post("/post/:id", threads.post);
 
