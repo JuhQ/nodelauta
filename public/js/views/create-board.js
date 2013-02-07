@@ -11,8 +11,9 @@ define(["jquery", "underscore", "backbone", "models/board", "text!templates/crea
       return this.$el.html(_.template(Template));
     },
     save: function(event) {
-      var model;
+      var model, that;
       event.preventDefault();
+      that = this;
       model = new Model({
         id: "createBoard"
       });

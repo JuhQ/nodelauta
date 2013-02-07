@@ -27,7 +27,7 @@ define [
     setPage: (Page, options) ->
       if @currentView
         @currentView.remove()
-        delete currentView
+        delete @currentView
 
       collection = window.utils.boardCollection
       defaultUrl = collection.get("url") if collection.at(0)

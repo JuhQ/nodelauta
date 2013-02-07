@@ -23,7 +23,7 @@ define(["views/index", "views/create-board"], function(IndexView, CreateBoardVie
       var board, collection, defaultUrl;
       if (this.currentView) {
         this.currentView.remove();
-        delete currentView;
+        delete this.currentView;
       }
       collection = window.utils.boardCollection;
       if (collection.at(0)) {

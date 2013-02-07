@@ -29,8 +29,8 @@ exports.getPosts = (req, res) ->
     res.send data
 
 exports.post = (req, res) ->
-  posts = mongoose.model 'posts', schema
-  post = new posts {
+  Posts = mongoose.model 'posts', schema
+  post = new Posts {
     threadid: req.body.thread or 0
     boardid: req.body.id
     title: req.body.title

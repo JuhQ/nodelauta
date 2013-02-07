@@ -27,6 +27,6 @@ define ["jquery", "underscore", "backbone"], ($, _, Backbone) ->
     $.event.props.push "dataTransfer"
     $("body").bind "dragenter dragover", false
 
-    window.addEventListener "load", (->
+    window.addEventListener "load", ->
       new FastClick(document.body)
-    ), false
+    , false

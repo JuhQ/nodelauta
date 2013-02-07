@@ -27,8 +27,8 @@ exports.boards = (req, res) ->
 
 exports.createBoard = (req, res) ->
   console.log "creating board"
-  boards = mongoose.model 'boards', schema
-  board = new boards {
+  Boards = mongoose.model 'boards', schema
+  board = new Boards {
     name: req.body.name
     url: req.body.url
     sticky: req.body.sticky

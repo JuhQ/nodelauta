@@ -41,9 +41,9 @@ exports.getPosts = function(req, res) {
 };
 
 exports.post = function(req, res) {
-  var post, posts;
-  posts = mongoose.model('posts', schema);
-  post = new posts({
+  var Posts, post;
+  Posts = mongoose.model('posts', schema);
+  post = new Posts({
     threadid: req.body.thread || 0,
     boardid: req.body.id,
     title: req.body.title,

@@ -25,7 +25,8 @@ define [
 
     save: (event) ->
       event.preventDefault()
-
+      that = this
+      
       model = new Model id: "createBoard"
       model.save Backbone.Syphon.serialize(this)
       

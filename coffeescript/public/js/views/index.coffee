@@ -49,7 +49,7 @@ define [
 
       $window.on "scroll resize", ->
         if $window.scrollTop() > headerHeight and $window.width() >= 768
-          navi.css "position": "", "width": parent.width() - (parseInt(navi.css("padding")) * 2)
+          navi.css "position": "", "width": parent.width() - (parseInt(navi.css("padding"), 10) * 2)
           navi.addClass "fixed"
         else
           navi.removeClass "fixed"

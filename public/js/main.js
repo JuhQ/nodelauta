@@ -21,8 +21,8 @@ define(["jquery", "underscore", "backbone"], function($, _, Backbone) {
     });
     $.event.props.push("dataTransfer");
     $("body").bind("dragenter dragover", false);
-    return window.addEventListener("load", (function() {
+    return window.addEventListener("load", function() {
       return new FastClick(document.body);
-    }), false);
+    }, false);
   });
 });

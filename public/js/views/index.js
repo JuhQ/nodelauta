@@ -51,7 +51,7 @@ define(["jquery", "underscore", "backbone", "views/posts", "views/post-form"], f
         if ($window.scrollTop() > headerHeight && $window.width() >= 768) {
           navi.css({
             "position": "",
-            "width": parent.width() - (parseInt(navi.css("padding")) * 2)
+            "width": parent.width() - (parseInt(navi.css("padding"), 10) * 2)
           });
           return navi.addClass("fixed");
         } else {
