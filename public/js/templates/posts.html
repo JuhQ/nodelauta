@@ -26,7 +26,7 @@ collection.each(function(model) {
       <hr>
       <div>
         <p>
-          <%=_.escape(model.get("content")).replace(/\n/g, "<br />")%>
+          <%=window.utils.postFormatter(model, board)%>
         </p>
       </div>
     </div>

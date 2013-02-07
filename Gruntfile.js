@@ -25,7 +25,7 @@ module.exports = function(grunt) {
     },
     coffeelintOptions: {
       "max_line_length": {
-        "value": 100
+        "value": 140
       }
     },
     jshint: {
