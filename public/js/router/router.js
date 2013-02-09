@@ -8,7 +8,6 @@ define(["views/index", "views/create-board"], function(IndexView, CreateBoardVie
       ":board/:thread": "index"
     },
     navi: $(".nav li"),
-    currentView: null,
     index: function(board, thread) {
       return this.setPage(IndexView, {
         board: board,
@@ -16,23 +15,18 @@ define(["views/index", "views/create-board"], function(IndexView, CreateBoardVie
       });
     },
     createBoard: function() {
-      console.log("yay");
       return new CreateBoardView();
     },
     setPage: function(Page, options) {
       var board, collection, defaultUrl;
-      if (this.currentView) {
-        this.currentView.remove();
-        delete this.currentView;
-      }
       collection = window.utils.boardCollection;
       if (collection.at(0)) {
-        defaultUrl = collection.get("url");
+        defaultUrl = collection.at(0).get("url");
       }
       board = options.board || Backbone.history.fragment || defaultUrl || "";
       this.navi.removeClass("active");
       this.navi.find("a[href='#" + board.toLowerCase() + "']").parent("li").addClass("active");
-      return this.currentView = new Page(options);
+      return new Page(options);
     }
   });
 });
