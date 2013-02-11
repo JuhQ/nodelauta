@@ -5,6 +5,7 @@ schema = mongoose.Schema {
   boardid: 'string'
   title: 'string'
   content: 'string'
+  poster: 'string'
   image: 'string'
   created: 'string'
   lastpost: 'string'
@@ -35,6 +36,7 @@ exports.post = (req, res) ->
     boardid: req.body.id
     title: req.body.title
     content: req.body.content
+    poster: req.body.poster
     image: req.body.base64
     created: new Date()
     lastpost: new Date()

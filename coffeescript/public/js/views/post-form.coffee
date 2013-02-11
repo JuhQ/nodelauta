@@ -36,7 +36,7 @@ define [
       if options.thread
         @$("textarea").focus().val ">>" + options.thread + "\n"
         @$("input[name='thread']").val(options.thread)
-      @$("label:has(input[type='file'])").hide() unless _.isUndefined(FileReader)
+      @$(".control-group:has(input[type='file'])").hide() unless _.isUndefined(FileReader)
       new Filedrop()
 
     save: (event) ->

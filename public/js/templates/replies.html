@@ -19,6 +19,7 @@ collection.each(function(model) {
     <div class="span<%=span%>">
         <hr>
         <p class="pull-left">
+            <%=_.escape(model.get("poster") || "Anonymous")%>
             <strong><%=_.escape(model.get("title"))%></strong>
         </p>
         <div class="pull-right">
