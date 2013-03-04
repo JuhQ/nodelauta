@@ -19,7 +19,7 @@ define(["jquery", "underscore", "backbone", "libs/moment", "collections/threads"
         success: function() {
           var _this = this;
           that.$el.html(_.template(ThreadTemplate, {
-            board: that.options.board.get("url"),
+            boards: that.options.board,
             collection: threads
           }));
           return threads.each(function(model) {
@@ -30,7 +30,7 @@ define(["jquery", "underscore", "backbone", "libs/moment", "collections/threads"
             return posts.fetch({
               success: function() {
                 return that.$el.find("#" + model.get("_id") + " .replies").html(_.template(PostTemplate, {
-                  board: that.options.board.get("url"),
+                  boards: that.options.board,
                   collection: posts
                 }));
               }

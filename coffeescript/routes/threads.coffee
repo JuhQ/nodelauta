@@ -13,16 +13,11 @@ schema = mongoose.Schema {
 
 exports.getThreads = (req, res) ->
   posts = mongoose.model 'posts', schema
-  posts.find {
-    boardid: req.params['id']
-    threadid: 0
-  }, {
-    '__v': 0,
-    'threadid': 0,
-    'boardid': 0
-  }, (err, data) ->
-    data.sort({ lastpost: 'desc' })
-    res.send data
+  posts.find({
+      boardid: req.params['id']
+      threadid: 0
+    }).sort('lastpost').exec (err, data) ->
+      res.send data
 
 exports.getPosts = (req, res) ->
   posts = mongoose.model 'posts', schema
@@ -43,5 +38,7 @@ exports.post = (req, res) ->
   }
   post.save (err) ->
     console.log 'Post saved'
+    if req.body.thread
+      Posts.update { threadid: req.body.thread }, { $set: { lastpost: new Date() }}
 
   res.send ok: "ok"

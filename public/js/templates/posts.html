@@ -1,6 +1,8 @@
 <%
 collection.each(function(model) {
-    var span = 12;
+    var span = 12,
+        boards = window.utils.boardCollection,
+        board = boards.get(model.get("boardid"));
 %>
   <div class="row-fluid well" id="<%=model.get("_id")%>">
     <%

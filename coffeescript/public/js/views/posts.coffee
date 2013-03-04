@@ -32,7 +32,7 @@ define [
       threads.fetch success: ->
 
         that.$el.html _.template(ThreadTemplate,
-          board: that.options.board.get("url")
+          boards: that.options.board
           collection: threads
         )
 
@@ -40,7 +40,7 @@ define [
           posts = new PostsCollection thread: model.get "_id"
           posts.fetch success: ->
             that.$el.find("#" + model.get("_id") + " .replies").html _.template(PostTemplate,
-              board: that.options.board.get("url")
+              boards: that.options.board
               collection: posts
             )
 

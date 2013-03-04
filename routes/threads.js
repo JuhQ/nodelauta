@@ -19,14 +19,7 @@ exports.getThreads = function(req, res) {
   return posts.find({
     boardid: req.params['id'],
     threadid: 0
-  }, {
-    '__v': 0,
-    'threadid': 0,
-    'boardid': 0
-  }, function(err, data) {
-    data.sort({
-      lastpost: 'desc'
-    });
+  }).sort('lastpost').exec(function(err, data) {
     return res.send(data);
   });
 };
@@ -55,7 +48,16 @@ exports.post = function(req, res) {
     lastpost: new Date()
   });
   post.save(function(err) {
-    return console.log('Post saved');
+    console.log('Post saved');
+    if (req.body.thread) {
+      return Posts.update({
+        threadid: req.body.thread
+      }, {
+        $set: {
+          lastpost: new Date()
+        }
+      });
+    }
   });
   return res.send({
     ok: "ok"
