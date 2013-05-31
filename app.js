@@ -2,61 +2,61 @@
 Module dependencies.
 */
 
-var app, express, http, mongoose, path, routes, threads;
 
-mongoose = require('mongoose');
+(function() {
+  var app, express, http, mongoconfig, mongoose, path, routes, threads;
 
-express = require("express");
+  mongoose = require('mongoose');
 
-routes = require("./routes");
+  express = require("express");
 
-threads = require("./routes/threads");
+  routes = require("./routes");
 
-http = require("http");
+  threads = require("./routes/threads");
 
-path = require("path");
+  http = require("http");
 
-mongoose = require('mongoose');
+  path = require("path");
 
-app = express();
+  mongoose = require('mongoose');
 
-app.configure(function() {
-  app.set("port", process.env.PORT || 3000);
-  app.set("views", __dirname + "/views");
-  app.set("view engine", "ejs");
-  app.use(express.favicon());
-  app.use(express.logger("dev"));
-  app.use(express.bodyParser());
-  app.use(express.methodOverride());
-  app.use(express.cookieParser("nodelauta is sexier than a panda with herpes"));
-  app.use(express.session());
-  app.use(app.router);
-  app.use(require("less-middleware")({
-    src: __dirname + "/public"
-  }));
-  return app.use(express["static"](path.join(__dirname, "public")));
-});
+  mongoconfig = require("./utils/mongoconfig");
 
-app.configure("development", function() {
-  return app.use(express.errorHandler());
-});
+  app = express();
 
-mongoose.connect('localhost', 'nodelauta');
+  app.configure(function() {
+    app.set("port", process.env.PORT || 3000);
+    app.set("views", __dirname + "/views");
+    app.set("view engine", "ejs");
+    app.use(express.bodyParser());
+    app.use(express.methodOverride());
+    app.use(express.cookieParser("nodelauta is sexier than a panda with herpes"));
+    app.use(express.session());
+    return app.use(app.router);
+  });
 
-app.get("/", routes.index);
+  app.configure("development", function() {
+    return app.use(express.errorHandler());
+  });
 
-app.get("/boards", routes.boards);
+  mongoconfig.config();
 
-app.get("/boards/:id", threads.getThreads);
+  app.get("/", routes.index);
 
-app.get("/thread/:id", threads.getPosts);
+  app.get("/boards", routes.boards);
 
-app.put("/board/createBoard", routes.createBoard);
+  app.get("/boards/:id", threads.getThreads);
 
-app.post("/post/:id", threads.post);
+  app.get("/thread/:id", threads.getPosts);
 
-app.put("/post/:id", threads.post);
+  app.put("/board/createBoard", routes.createBoard);
 
-http.createServer(app).listen(app.get("port"), function() {
-  return console.log("Express server listening on port " + app.get("port"));
-});
+  app.post("/post/:id", threads.post);
+
+  app.put("/post/:id", threads.post);
+
+  http.createServer(app).listen(app.get("port"), function() {
+    return console.log("Express server listening on port " + app.get("port"));
+  });
+
+}).call(this);

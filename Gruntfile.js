@@ -1,65 +1,57 @@
-
-module.exports = function(grunt) {
-  grunt.initConfig({
-    coffeelint: {
-      files: ['coffeescript/*.coffee', 'coffeescript/**/*.coffee']
-    },
-    coffee: {
-      files: {
-        'public/js/toffee/*.js': ['coffeescript/*.coffee', 'coffeescript/**/*.coffee']
-      }
-    },
-    watch: {
-      scripts: {
-        files: "<%=jshint.all%>",
-        tasks: "jshint"
+(function() {
+  module.exports = function(grunt) {
+    grunt.initConfig({
+      jshint: {
+        all: ["Gruntfile.js", "routes/*.js", "public/**/*.js", "!public/js/libs/**/*.js"],
+        options: {
+          curly: true,
+          eqeqeq: true,
+          eqnull: true,
+          browser: true,
+          globals: {
+            jQuery: true
+          }
+        }
       },
       coffee: {
-        files: "<%=coffee.files%>",
-        tasks: "coffee"
+        glob_to_multiple: {
+          expand: true,
+          cwd: "coffeescript",
+          src: ["**/*.coffee"],
+          dest: "",
+          ext: ".js"
+        }
       },
       coffeelint: {
-        files: "<%=coffeelint.app%>",
-        tasks: "coffeelint"
-      }
-    },
-    coffeelintOptions: {
-      "max_line_length": {
-        "value": 140
-      }
-    },
-    jshint: {
-      all: ["grunt.js", "modules/*.js", "routes/*.js", "public/js/*.js", "*.js"],
-      options: {
-        curly: true,
-        eqeqeq: true,
-        immed: true,
-        latedef: true,
-        newcap: true,
-        noarg: true,
-        sub: true,
-        undef: true,
-        boss: true,
-        eqnull: true,
-        node: true,
-        es5: true,
-        strict: false,
-        globals: {
-          requirejs: true,
-          define: true,
-          google: true,
-          document: true,
-          $: true,
-          window: true,
-          FastClick: true,
-          FileReader: true,
-          Backbone: true
+        app: ["coffeescript/**/*.coffee"],
+        options: {
+          max_line_length: {
+            value: 140
+          }
+        }
+      },
+      less: {
+        glob_to_multiple: {
+          expand: true,
+          cwd: "less",
+          src: ["**/*.less", "!mixins.less"],
+          dest: "public/css/",
+          ext: ".css"
+        }
+      },
+      watch: {
+        src: {
+          files: ["coffeescript/**/*.coffee", "less/*.less"],
+          tasks: ["default"]
         }
       }
-    }
-  });
-  grunt.loadNpmTasks("grunt-coffeelint");
-  grunt.loadNpmTasks("grunt-contrib-jshint");
-  grunt.loadNpmTasks("grunt-contrib-watch");
-  return grunt.registerTask("default", ["jshint", "coffeelint"]);
-};
+    });
+    grunt.loadNpmTasks("grunt-contrib-watch");
+    grunt.loadNpmTasks("grunt-contrib-coffee");
+    grunt.loadNpmTasks("grunt-coffeelint");
+    grunt.loadNpmTasks("grunt-contrib-jshint");
+    grunt.loadNpmTasks("grunt-contrib-less");
+    return grunt.registerTask("default", ["coffeelint", "coffee", "jshint", "less"]);
+  };
+
+}).call(this);

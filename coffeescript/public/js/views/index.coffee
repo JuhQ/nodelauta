@@ -23,7 +23,7 @@ define [
       collection = window.utils.boardCollection
       defaultUrl = collection.at(0).get("url") if collection.at(0)
       boardUrl = @options.board or defaultUrl or ""
-      that = this
+      that = @
 
       $(".sidebar-nav .reload").tooltip()
 
@@ -31,14 +31,14 @@ define [
         board.get("url") is boardUrl
       )
 
-      window.utils.postForm = new PostFormView() unless window.utils.postForm
-      window.utils.postForm.render board: @board, thread: @.options.thread
+      @postForm = new PostFormView() unless window.utils.postForm
+      @postForm.render board: @board, thread: @.options.thread
 
-      window.utils.postsView = new PostsView() unless window.utils.postsView
-      window.utils.postsView.render board: @board, thread: @.options.thread
+      @postsView = new PostsView() unless window.utils.postsView
+      @postsView.render board: @board, thread: @.options.thread
 
-      window.utils.postForm.model.on "sync", ->
-        window.utils.postsView.render board: that.board, thread: that.options.thread
+      @postForm.model.on "sync", ->
+        thatpostsView.render board: that.board, thread: that.options.thread
 
       @anchorNavigation()
 
@@ -48,7 +48,7 @@ define [
 
     reload: (event) ->
       event.preventDefault()
-      window.utils.postsView.render board: @.board, thread: @.options.thread
+      @postsView.render board: @.board, thread: @.options.thread
 
     anchorNavigation: () ->
       h1 = $("h1")

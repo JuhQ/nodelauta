@@ -8,26 +8,28 @@ threads = require("./routes/threads")
 http = require("http")
 path = require("path")
 mongoose = require('mongoose')
+mongoconfig = require("./utils/mongoconfig")
 app = express()
 
 app.configure ->
   app.set "port", process.env.PORT or 3000
   app.set "views", __dirname + "/views"
   app.set "view engine", "ejs"
-  app.use express.favicon()
-  app.use express.logger("dev")
+  #app.use express.favicon()
+  #app.use express.logger("dev")
   app.use express.bodyParser()
   app.use express.methodOverride()
   app.use express.cookieParser("nodelauta is sexier than a panda with herpes")
   app.use express.session()
   app.use app.router
-  app.use require("less-middleware")(src: __dirname + "/public")
-  app.use express.static(path.join(__dirname, "public"))
+  #app.use require("less-middleware")(src: __dirname + "/public")
+  #app.use express.static(path.join(__dirname, "public"))
 
 app.configure "development", ->
   app.use express.errorHandler()
 
-mongoose.connect 'localhost', 'nodelauta'
+
+mongoconfig.config()
 
 app.get "/", routes.index
 app.get "/boards", routes.boards

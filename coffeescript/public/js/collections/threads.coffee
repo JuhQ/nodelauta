@@ -4,3 +4,4 @@ define ["backbone", "models/thread"], (Backbone, Model) ->
     model: Model
     initialize: (options) ->
       @url = @url.replace(":board", options.board)
+      return

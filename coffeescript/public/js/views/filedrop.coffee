@@ -15,6 +15,7 @@ define [
 
     initialize: () ->
       @fileReader = new FileReader()
+      return
 
     drop: (event) ->
       event.stopPropagation()

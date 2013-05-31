@@ -31,3 +31,5 @@ define [
       @navi.removeClass "active"
       @navi.find("a[href='#" + board.toLowerCase() + "']").parent("li").addClass "active"
       new Page(options)
+      
+      _gaq.push ['_trackPageview', board]

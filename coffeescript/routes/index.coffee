@@ -1,17 +1,11 @@
 mongoose = require('mongoose')
 
-schema = mongoose.Schema {
-  name: 'string'
-  url: 'string'
-  sticky: 'boolean'
-}
-
 getBoards = (req, res, callback) ->
-  boards = mongoose.model 'boards', schema
+  boards = mongoose.model 'boards'
 
   boards.find { }, (err, data) ->
     unless callback
-      res.send data
+      res.jsonp data
     else
       callback data
 
@@ -27,7 +21,7 @@ exports.boards = (req, res) ->
 
 exports.createBoard = (req, res) ->
   console.log "creating board"
-  Boards = mongoose.model 'boards', schema
+  Boards = mongoose.model 'boards'
   board = new Boards {
     name: req.body.name
     url: req.body.url

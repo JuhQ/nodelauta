@@ -4,3 +4,4 @@ define ["backbone", "models/post"], (Backbone, Model) ->
     model: Model
     initialize: (options) ->
       @url = @url.replace(":thread", options.thread)
+      return

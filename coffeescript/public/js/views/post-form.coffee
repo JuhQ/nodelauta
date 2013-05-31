@@ -4,7 +4,7 @@ define [
   "backbone"
   "models/post"
   "text!templates/post-form.html"
-  "views/filedrop"
+  #"views/filedrop"
   "libs/backbone.syphon"
   ], (
   $
@@ -12,7 +12,7 @@ define [
   Backbone
   Model
   Template
-  Filedrop
+  #Filedrop
   Syphon
   ) ->
 
@@ -36,8 +36,9 @@ define [
       if options.thread
         @$("textarea").focus().val ">>" + options.thread + "\n"
         @$("input[name='thread']").val(options.thread)
-      @$(".control-group:has(input[type='file'])").hide() unless _.isUndefined(FileReader)
-      new Filedrop()
+
+      #@$(".control-group:has(input[type='file'])").hide() unless _.isUndefined(FileReader)
+      #new Filedrop()
 
     save: (event) ->
       event.preventDefault()
@@ -47,4 +48,4 @@ define [
       # BUG first event is error
       @model.on "sync", () ->
         that.$("input:not(input[name='id'],input[name='thread']), textarea").val ""
-        that.$(".drop p").remove()
+        #that.$(".drop p").remove()
