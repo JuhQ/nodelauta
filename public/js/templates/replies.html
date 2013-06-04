@@ -1,42 +1,46 @@
 <%
 collection.each(function(model) {
-    var span = 12,
-        boards = window.utils.boardCollection,
-        board = boards.get(model.get("boardid"));
-%>
+  var span = 12,
+      boards = window.utils.boardCollection,
+      board = boards.get(model.get("boardid"));
+  %>
+  <div class="clearfix"></div>
 
-<div class="span11">
+  <div class="span11">
     <%
     if(model.get('image')) {
-        span = 9;
+      span = 9;
     %>
 
-    <div class="span3">
-      <img src="<%=model.get('image')%>" />
-    </div>
+      <div class="span3">
+        <img src="<%=model.get('image')%>" />
+      </div>
 
     <%
     }
     %>
     <div class="span<%=span%>">
-        <hr>
-        <p class="pull-left">
-            <%=_.escape(model.get("poster") || "Anonymous")%>
-            <strong><%=_.escape(model.get("title"))%></strong>
+      <hr>
+      <p class="pull-left">
+        <%=_.escape(model.get("poster") || "Anonymous")%>
+        <strong><%=_.escape(model.get("title"))%></strong>
+      </p>
+      <div class="pull-right">
+        <a href="#<%=board.get("url")%>/<%=model.get("threadid")%>/<%=model.get("_id")%>" class="thread-link"><%=moment(model.get("created")).calendar()%></a>
+      </div>
+
+      <i class="pull-right icon-time"></i>
+      <div class="clearfix"></div>
+      <hr>
+
+      <div>
+        <p>
+          <%=window.utils.postFormatter(model, board.get("url"))%>
         </p>
-        <div class="pull-right">
-            <a href="#<%=board%>/<%=model.get("_id")%>" class="thread-link"><%=moment(model.get("created")).calendar()%></a>
-        </div>
-        <i class="pull-right icon-time"></i>
-        <div class="clearfix"></div>
-        <hr>
-        <div>
-            <p>
-                <%=window.utils.postFormatter(model, board)%>
-            </p>
-        </div>
+      </div>
     </div>
-</div>
+  </div>
 <%
 });
 %>
+<div class="clearfix"></div>

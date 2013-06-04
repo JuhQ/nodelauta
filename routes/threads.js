@@ -1,7 +1,9 @@
 (function() {
-  var mongoose, uploadImage;
+  var mongoose, uploadImage, uploadPath;
 
   mongoose = require('mongoose');
+
+  uploadPath = __dirname + "/uploads/uploadedFileName/";
 
   exports.getThreads = function(req, res) {
     var posts;
@@ -10,7 +12,7 @@
     return posts.find({
       boardid: req.params.id,
       threadid: 0
-    }).sort('lastpost').exec(function(err, data) {
+    }).sort('-lastpost').exec(function(err, data) {
       return res.jsonp(data);
     });
   };
@@ -27,49 +29,30 @@
   };
 
   uploadImage = function(req, res) {
-    var Images, fs, image;
+    var fs;
 
     fs = require('fs');
-    console.log(req.files.image);
-    if (req.files.image.type !== "image/png") {
+    if (req.files && req.files.image) {
+      console.log(req.files.image);
+    }
+    if (!/\.(gif|jpg|jpeg|png)$/i.test(req.files.image.type)) {
       return res.jsonp({
-        fail: "lol"
+        multifail: "wrong image type"
       });
     }
-    Images = mongoose.model("images");
-    image = new Images({
-      user: req.session.user,
-      added: new Date()
-    });
-    return image.save(function() {
-      callback();
-      return res.render("uploaded", {
-        path: req.files.image.path
+    return fs.readFile(req.files.image.path, function(err, data) {
+      var filename, newPath;
+
+      filename = (new Date()).getTime() + "." + req.files.image.type;
+      newPath = uploadPath + filename;
+      return fs.writeFile(newPath, data, function(err) {
+        return callback(filename);
       });
       /*
-      fs.readFile req.files.image.path, (err, data) ->
-        
-        # ...
-        newPath = __dirname + "/uploads/uploadedFileName"
-        fs.writeFile newPath, data, (err) ->
-          res.redirect "back"
-      
-      
-      console.log "image", image
-      */
-
-      /*
-        '\nuploaded %s, %s (%d Kb) to %s as %s'
         req.files.image.type
         req.files.image.name
-        req.files.image.size / 1024 | 0
+        req.files.image.size
         req.files.image.path
-        req.body.title
-      */
-
-      /*
-      res.render "uploaded",
-        path: req.files.image.path
       */
 
     });
@@ -78,22 +61,24 @@
   exports.post = function(req, res) {
     var callback;
 
-    callback = function() {
-      var Posts, post;
+    callback = function(filename) {
+      var Posts, data, post;
 
-      Posts = mongoose.model('posts');
-      post = new Posts({
+      data = {
         threadid: req.body.thread || 0,
         boardid: req.body.id,
         title: req.body.title,
         content: req.body.content,
         poster: req.body.poster,
-        image: image,
         created: new Date(),
         lastpost: new Date()
-      });
+      };
+      if (filename) {
+        data.image = filename;
+      }
+      Posts = mongoose.model('posts');
+      post = new Posts(data);
       post.save(function(err) {
-        console.log('Post saved');
         if (req.body.thread) {
           return Posts.update({
             threadid: req.body.thread
@@ -108,10 +93,10 @@
         ok: "ok"
       });
     };
-    if (req.files.image) {
+    if (req.files && req.files.image) {
       return uploadImage(req, res, callback);
     }
-    return callback();
+    return callback(false);
   };
 
 }).call(this);

@@ -1,13 +1,14 @@
 <%
 collection.each(function(model) {
-    var span = 12,
-        boards = window.utils.boardCollection,
-        board = boards.get(model.get("boardid"));
+  var span = 12,
+      boards = window.utils.boardCollection,
+      board = boards.get(model.get("boardid"));
+
 %>
-  <div class="row-fluid well" id="<%=model.get("_id")%>">
+  <div class="well" id="<%=model.get("_id")%>">
     <%
     if(model.get('image')) {
-        span = 9;
+      span = 9;
     %>
     <div class="span3">
       <img src="<%=model.get('image')%>" />
@@ -22,7 +23,7 @@ collection.each(function(model) {
         <strong><%=_.escape(model.get("title"))%></strong>
       </p>
       <div class="pull-right">
-        <a href="#<%=board%>/<%=model.get("_id")%>" class="thread-link"><%=moment(model.get("created")).calendar()%></a>
+        <a href="#<%=board.get("url")%>/<%=model.get("_id")%>" class="thread-link"><%=moment(model.get("created")).calendar()%></a>
       </div>
       <i class="pull-right icon-time"></i>
       <div class="clearfix"></div>
@@ -33,7 +34,9 @@ collection.each(function(model) {
         </p>
       </div>
     </div>
-      <div class="replies"></div>
+    <div class="clearfix"></div>
+    <div class="replies"></div>
+    <div class="clearfix"></div>
   </div>
 
 <%

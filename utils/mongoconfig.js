@@ -4,7 +4,7 @@
   mongoose = require('mongoose');
 
   exports.config = function() {
-    var boardSchema, postSchema;
+    var boardSchema, postSchema, userSchema;
 
     boardSchema = mongoose.Schema({
       name: 'string',
@@ -21,8 +21,16 @@
       created: 'string',
       lastpost: 'string'
     });
+    userSchema = mongoose.Schema({
+      email: 'String',
+      password: 'String',
+      salt: 'String',
+      added: 'Date',
+      lastvisit: 'Date'
+    });
     mongoose.model('boards', boardSchema);
     mongoose.model('posts', postSchema);
+    mongoose.model('users', userSchema);
     return mongoose.connect('localhost', 'nodelauta');
   };
 

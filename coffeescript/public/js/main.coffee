@@ -2,7 +2,7 @@ requirejs.config
   baseUrl: "js"
   enforceDefine: true
   paths:
-    jquery: "http://ajax.googleapis.com/ajax/libs/jquery/2.0.1/jquery.min"
+    jquery: "http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min"
     backbone: "libs/backbone"
     underscore: "libs/underscore"
     text: "libs/text"
@@ -21,12 +21,9 @@ define ["jquery", "underscore", "backbone"], ($, _, Backbone) ->
       window.utils = Utils
       window.router = new Router()
       Backbone.history.start()
+      new FastClick(document.body)
     
     # jQuery creates it's own event object, and it doesn't have a
     # dataTransfer property yet. This adds dataTransfer to the event object.
-    $.event.props.push "dataTransfer"
-    $("body").bind "dragenter dragover", false
-
-    window.addEventListener "load", ->
-      new FastClick(document.body)
-    , false
+    #$.event.props.push "dataTransfer"
+    #$("body").bind "dragenter dragover", false

@@ -18,9 +18,7 @@
 
   exports.index = function(req, res) {
     return getBoards(req, res, function(rows) {
-      console.log(rows);
       return res.render("index", {
-        title: "Nodelauta",
         rows: rows
       });
     });
@@ -33,7 +31,6 @@
   exports.createBoard = function(req, res) {
     var Boards, board;
 
-    console.log("creating board");
     Boards = mongoose.model('boards');
     board = new Boards({
       name: req.body.name,
@@ -41,7 +38,9 @@
       sticky: req.body.sticky
     });
     return board.save(function(err) {
-      return console.log('row saved');
+      return res.jsonp({
+        done: true
+      });
     });
   };
 

@@ -1,4 +1,4 @@
 define ["backbone", "models/board"], (Backbone, Model) ->
   Backbone.Collection.extend
-    url: "/boards"
+    url: "/api/boards"
     model: Model

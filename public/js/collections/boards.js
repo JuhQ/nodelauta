@@ -1,7 +1,7 @@
 (function() {
   define(["backbone", "models/board"], function(Backbone, Model) {
     return Backbone.Collection.extend({
-      url: "/boards",
+      url: "/api/boards",
       model: Model
     });
   });

@@ -17,8 +17,16 @@ exports.config = () ->
     created: 'string'
     lastpost: 'string'
   }
+  userSchema = mongoose.Schema {
+    email: 'String'
+    password: 'String'
+    salt: 'String'
+    added: 'Date'
+    lastvisit: 'Date'
+  }
 
   mongoose.model 'boards', boardSchema
   mongoose.model 'posts', postSchema
+  mongoose.model 'users', userSchema
 
   mongoose.connect 'localhost', 'nodelauta'

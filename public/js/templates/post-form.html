@@ -1,42 +1,43 @@
 <div class="well">
-    <form class="form-horizontal">
-        <input type="hidden" name="id" value="<%=board%>" />
-        <input type="hidden" name="thread" value="0" />
-        <input type="hidden" name="base64" />
-        <div class="control-group">
-            <label class="control-label" for="title">Otsikko</label>
-            <div class="controls">
-                <input type="text" name="title" id="title" />
-            </div>
-        </div>
-        <div class="control-group">
-            <label class="control-label" for="poster">Nimimerkki</label>
-            <div class="controls">
-                <input type="text" name="poster" id="poster" />
-            </div>
-        </div>
-        <div class="control-group">
-            <label class="control-label" for="file">Valitse kuva</label>
-            <div class="controls">
-                <input type="file" id="file" />
-            </div>
-        </div>
-        <div class="control-group">
-            <label class="control-label" for="content">Viesti</label>
-            <div class="controls">
-                <textarea name="content" class="span12" id="content"></textarea>
-            </div>
-        </div>
-        <div class="control-group">
-            <div class="drop span11">
-                <p class="help">Drag &amp; Drop files here</p>
-            </div>
-        </div>
-        <div class="control-group">
-            <div class="controls">
-              <a class="btn btn-primary btn-large post-button" href="#"><i class="icon-white icon-comment"></i> Lähetä!!11</a>
-          </div>
+  <form class="form-horizontal">
+    <input type="hidden" name="id" value="<%=board%>" />
+    <input type="hidden" name="thread" value="0" />
+    <div class="control-group">
+      <label class="control-label" for="title">Otsikko</label>
+      <div class="controls">
+        <input type="text" name="title" id="title" />
       </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="poster">Nimimerkki</label>
+      <div class="controls">
+        <input type="text" name="poster" id="poster" />
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="file">Valitse kuva</label>
+      <div class="controls">
+        <input type="file" id="file" name="image" />
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="content">Viesti</label>
+      <div class="controls">
+        <textarea name="content" class="span12" id="content"></textarea>
+      </div>
+    </div>
+    <!--
+    <div class="control-group">
+      <div class="drop span11">
+        <p class="help">Drag &amp; Drop files here</p>
+      </div>
+    </div>
+    -->
+    <div class="control-group">
+      <div class="controls">
+        <a class="btn btn-primary btn-large post-button" href="#"><i class="icon-white icon-comment"></i> Lähetä!!11</a>
+      </div>
+    </div>
   </form>
 </div>
 <hr>

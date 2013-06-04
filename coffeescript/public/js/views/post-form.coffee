@@ -34,8 +34,10 @@ define [
         )
 
       if options.thread
-        @$("textarea").focus().val ">>" + options.thread + "\n"
         @$("input[name='thread']").val(options.thread)
+
+      if options.post
+        @$("textarea").focus().val ">>" + options.post + "\n"
 
       #@$(".control-group:has(input[type='file'])").hide() unless _.isUndefined(FileReader)
       #new Filedrop()

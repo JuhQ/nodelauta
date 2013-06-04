@@ -14,7 +14,8 @@
           return;
         }
         threads = new ThreadsCollection({
-          board: this.options.board.get("_id")
+          board: this.options.board.get("_id"),
+          thread: this.options.thread
         });
         return threads.fetch({
           success: function() {

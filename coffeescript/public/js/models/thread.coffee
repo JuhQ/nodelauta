@@ -1,6 +1,9 @@
 define ["backbone"], (Backbone) ->
   Backbone.Model.extend
-    urlRoot: "/post"
+    urlRoot: "/api/post"
     defaults:
       title: ""
       content: ""
+    parse: (response) ->
+      response.id = response._id
+      response

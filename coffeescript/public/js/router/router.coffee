@@ -1,8 +1,10 @@
 define [
   "views/index"
+  "views/thread"
   "views/create-board"
 ], (
   IndexView
+  ThreadView
   CreateBoardView
   ) ->
   Backbone.Router.extend
@@ -10,14 +12,22 @@ define [
       "createBoard": "createBoard"
       "": "index"
       ":board": "index"
-      ":board/:thread": "index"
+      ":board/:thread": "thread"
+      ":board/:thread/:post": "thread"
 
     navi: $(".nav li")
 
-    index: (board, thread) ->
+    index: (board, thread, post) ->
       @setPage IndexView,
         board: board
         thread: thread
+        post: post
+
+    thread: (board, thread, post) ->
+      @setPage ThreadView,
+        board: board
+        thread: thread
+        post: post
 
     createBoard: () ->
       new CreateBoardView()

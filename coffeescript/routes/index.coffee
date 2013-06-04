@@ -11,16 +11,13 @@ getBoards = (req, res, callback) ->
 
 exports.index = (req, res) ->
   getBoards req, res, (rows) ->
-    console.log rows
     res.render "index",
-      title: "Nodelauta"
       rows: rows
 
 exports.boards = (req, res) ->
   getBoards req, res
 
 exports.createBoard = (req, res) ->
-  console.log "creating board"
   Boards = mongoose.model 'boards'
   board = new Boards {
     name: req.body.name
@@ -28,4 +25,4 @@ exports.createBoard = (req, res) ->
     sticky: req.body.sticky
   }
   board.save (err) ->
-    console.log 'row saved'
+    res.jsonp done: true

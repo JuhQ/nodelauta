@@ -28,7 +28,7 @@ define [
       that = this
 
       return unless @options.board
-      threads = new ThreadsCollection board: @options.board.get "_id"
+      threads = new ThreadsCollection board: @options.board.get("_id"), thread: @options.thread
       threads.fetch success: ->
 
         that.$el.html _.template(ThreadTemplate,

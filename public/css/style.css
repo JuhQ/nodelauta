@@ -7,8 +7,14 @@ a {
 .sidebar-nav.fixed {
   position: fixed;
   top: 0;
-  height: 88.5%;
+  bottom: 10px;
   overflow-y: auto;
+}
+.posts .replies {
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  background: rgba(216, 216, 216, 0.25);
 }
 .posts img {
   max-height: 400px;

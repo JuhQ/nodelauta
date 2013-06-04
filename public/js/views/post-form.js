@@ -16,8 +16,10 @@
           }));
         }
         if (options.thread) {
-          this.$("textarea").focus().val(">>" + options.thread + "\n");
-          return this.$("input[name='thread']").val(options.thread);
+          this.$("input[name='thread']").val(options.thread);
+        }
+        if (options.post) {
+          return this.$("textarea").focus().val(">>" + options.post + "\n");
         }
       },
       save: function(event) {

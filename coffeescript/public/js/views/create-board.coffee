@@ -21,7 +21,7 @@ define [
 
     initialize: (options) ->
       _.bindAll this, "save"
-      @.$el.html(_.template Template)
+      @$el.html(_.template Template)
 
     save: (event) ->
       event.preventDefault()

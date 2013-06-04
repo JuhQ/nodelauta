@@ -1,51 +1,20 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<%= include header.ejs %>
 
-    <script data-main="/js/main.js" src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.1.5/require.min.js"></script>
+  <div class="container-fluid">
+    <div class="row-fluid">
+      <div class="span3">
+        <div class="well sidebar-nav">
 
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap-responsive.min.css" />
-
-    <link href="/css/style.css" rel="stylesheet" />
-
-  </head>
-  <body>
-
-    <h1>
-      alilauta
-    </h1>
-
-    <div class="container-fluid">
-      <div class="row-fluid">
-        <div class="span3">
-          <div class="well sidebar-nav">
-            
-            <%= include navigation.ejs %>
-
-          </div>
-        </div>
-        <div class="span9">
-
-            <%= include content.ejs %>
+          <%= include navigation.ejs %>
 
         </div>
       </div>
+      <div class="span9">
+
+        <%= include content.ejs %>
+
+      </div>
     </div>
+  </div>
 
-    <script>
-      var _gaq = _gaq || [];
-      _gaq.push(['_setAccount', 'UA-1306570-44']);
-      _gaq.push(['_trackPageview']);
-
-      (function() {
-        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-      })();
-    </script>
-    
-  </body>
-</html>
+<%= include footer.ejs %>

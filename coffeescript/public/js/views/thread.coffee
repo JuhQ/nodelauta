@@ -16,7 +16,7 @@ define [
     board: null
     initialize: ->
       MainView::initialize.call this
-
+      
       collection = window.utils.boardCollection
       defaultUrl = collection.at(0).get("url") if collection.at(0)
       boardUrl = @options.board or defaultUrl or ""
