@@ -2,11 +2,11 @@ requirejs.config
   baseUrl: "js"
   enforceDefine: true
   paths:
-    jquery: "http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min"
+    jquery: ["http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min", "libs/jquery"]
     backbone: "libs/backbone"
     underscore: "libs/underscore"
     text: "libs/text"
-    bootstrap: "libs/bootstrap/js/bootstrap.min"
+    bootstrap: "libs/bootstrap"
 
 define ["jquery", "underscore", "backbone"], ($, _, Backbone) ->
   require [
